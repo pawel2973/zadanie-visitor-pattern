@@ -2,85 +2,53 @@ package org.wall;
 
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
+import org.visitor.BlockVisitorImpl;
+import org.visitor.Visitor;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @AllArgsConstructor
 public class Wall implements Structure {
     private List<Block> blocks;
 
-    private static Stream<Block> deepFlat(@NonNull Block block) {
-
-        if (block instanceof CompositeBlock) {
-            CompositeBlock compositeBlock = (CompositeBlock) block;
-            List<Block> childBlocks = compositeBlock.getBlocks();
-
-            if (childBlocks == null) {
-                return Stream.of(compositeBlock);
-            }
-
-            return Stream.concat(
-                    Stream.of(compositeBlock),
-                    childBlocks.stream()
-                            .flatMap(Wall::deepFlat));
-        } else {
-            return Stream.of(block);
-        }
-    }
-
-    private static int deepCount(@NonNull Block block) {
-
-        if (block instanceof CompositeBlock) {
-            List<Block> childBlocks = ((CompositeBlock) block).getBlocks();
-
-            if (childBlocks == null) {
-                return 1;
-            }
-
-            return 1 + childBlocks.stream()
-                    .mapToInt(Wall::deepCount)
-                    .sum();
-        } else {
-            return 1;
-        }
-    }
-
     @Override
     public Optional<Block> findBlockByColor(@NonNull String color) {
+        Visitor visitor = new BlockVisitorImpl();
 
         return blocks.stream()
-                .flatMap(Wall::deepFlat)
-                .filter(bl -> {
-                    if (bl.getColor() == null) {
+                .flatMap(block -> block.accept(visitor))
+                .filter(block -> {
+                    if (block.getColor() == null) {
                         return false;
                     }
-                    return bl.getColor().equalsIgnoreCase(color);
+                    return block.getColor().equalsIgnoreCase(color);
                 })
-                .findAny();
+                .findFirst();
     }
 
-    @Override
     public List<Block> findBlocksByMaterial(@NonNull String material) {
+        Visitor visitor = new BlockVisitorImpl();
 
         return blocks.stream()
-                .flatMap(Wall::deepFlat)
-                .filter(bl -> {
-                    if (bl.getMaterial() == null) {
+                .flatMap(block -> block.accept(visitor))
+                .filter(block -> {
+                    if (block.getMaterial() == null) {
                         return false;
                     }
-                    return bl.getMaterial().equalsIgnoreCase(material);
+                    return block.getMaterial().equalsIgnoreCase(material);
                 })
                 .collect(Collectors.toList());
     }
 
     @Override
     public int count() {
+        Visitor visitor = new BlockVisitorImpl();
 
         return blocks.stream()
-                .mapToInt(Wall::deepCount)
+                .flatMap(block -> block.accept(visitor))
+                .mapToInt(block -> 1)
                 .sum();
     }
 }

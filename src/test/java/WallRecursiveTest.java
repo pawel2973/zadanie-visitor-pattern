@@ -5,7 +5,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.wall.Block;
-import org.wall.Wall;
+import org.wall.WallRecursive;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class WallTest {
+public class WallRecursiveTest {
     private static Stream<Arguments> countData() {
 
         return Stream.of(
@@ -197,7 +197,7 @@ public class WallTest {
     public void count_withDataFromMethod_resultFromData(List<Block> blocks,
                                                         int expectedResult) {
         // given
-        Wall wall = new Wall(blocks);
+        WallRecursive wall = new WallRecursive(blocks);
 
         // when
         int result = wall.count();
@@ -213,7 +213,7 @@ public class WallTest {
                                                                        List<Block> blocks,
                                                                        List<Block> expectedResult) {
         // given
-        Wall wall = new Wall(blocks);
+        WallRecursive wall = new WallRecursive(blocks);
 
         // when
         List<Block> result = wall.findBlocksByMaterial(material);
@@ -229,7 +229,7 @@ public class WallTest {
                                                                                     List<Block> blocks,
                                                                                     Optional<Block> expectedResult) {
         // given
-        Wall wall = new Wall(blocks);
+        WallRecursive wall = new WallRecursive(blocks);
 
         // when
         Optional<Block> result = wall.findBlockByColor(color);
@@ -244,7 +244,7 @@ public class WallTest {
                                                                                    List<Block> blocks,
                                                                                    boolean expectedResult) {
         // given
-        Wall wall = new Wall(blocks);
+        WallRecursive wall = new WallRecursive(blocks);
 
         // when
         boolean result = wall.findBlockByColor(color).isPresent();
@@ -256,7 +256,7 @@ public class WallTest {
     @Test
     public void findByColor_withNullColor_throwsNullPointerException() {
         // given
-        Wall wall = new Wall(List.of(new CustomBlock("red", "wood")));
+        WallRecursive wall = new WallRecursive(List.of(new CustomBlock("red", "wood")));
 
         // when
 
@@ -267,7 +267,7 @@ public class WallTest {
     @Test
     public void findByMaterial_withNullMaterial_throwsNullPointerException() {
         // given
-        Wall wall = new Wall(List.of(new CustomBlock("red", "wood")));
+        WallRecursive wall = new WallRecursive(List.of(new CustomBlock("red", "wood")));
 
         // when
 
