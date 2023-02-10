@@ -90,10 +90,15 @@ Metodę **deepFlat** wywołujemy (w metodzie **findBlockByColor**) na każdym el
 
 Metoda **deepFlat** zwraca Strumień: **Stream<Block>** [1:L15], zawierający zarówno element strumienia przekazany jako argument do tej metody [1:L26] (**@NonNull Block block**) jak i wszystkie jego dzieci [1:L27] (**childrens**) będące wynikiem wywołania na nim metody getBlocks() [1:L19], o ile aktualnie rozpatrywany element strumienia jest typu CompositeBlock [1:L17], jeżeli jest tylko typu **Block** [1:L30] (lub **childBlocks == null** [1:L21]) mamy do czynienia z tzw. przypadkiem podstawowym w rekurencji. Dzięki temu w poszukiwaniach Block o zadanym kolorze uwzględnimy wszystkie Block (nawet te pochodzące z metody **getBlocks()** [1:L19]). Pamiętajmy, że wspomniane **childrens**, również mogą posiadać **childrens** stąd zastosowanie rekurencji. 
 
+<p align="center">
+  <img src="doc/deep_flat.jpg"> 
+</p>
 
 Metoda **findBlockByColor** wykorzystuje metodę **deepFlat** [2:L55] wewnątrz metody **flatMap** [2:L55] wykonywanej na **każdym** elemencie strumienia. Dzięki temu uzyskujemy jeden strumień składający z wszystkich możliwych Block. W tym momencie wystarczy tylko odpowiednio **pofiltrować** [2:L56] wyniki i zwrócić **wynik**.
 
-
+<p align="center">
+  <img src="doc/find_block_by_color.jpg"> 
+</p>
 
 ## 2. **public List<Block> findBlocksByMaterial(@NonNull String material)**
 
@@ -129,6 +134,9 @@ Metoda **findBlockByColor** wykorzystuje metodę **deepFlat** [2:L55] wewnątrz 
 * [3:L47] Jeżeli blok jest tylko typu Block oznacza to, że z pewnością nie ma childrens więc zwracamy 1 (przypadek podstawowy)
 * [3:L40] Skoro **CompositeBlocks** nie ma childrens (**getBlocks == null**) zwracamy tylko 1 reprezentującą istnienie CompositeBlocks.
 
+<p align="center">
+  <img src="doc/deep_count.jpg"> 
+</p>
 
 # V. Podsumowanie
 * Projekt wykonano w **Javie 11** oraz skorzystano z **lombok** oraz **junit**.
