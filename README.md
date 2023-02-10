@@ -24,17 +24,17 @@ Z uwzględnieniem w analizie i implementacji interfejsu CompositeBlock!
 # II. Wstęp
 Najważniejszym elementem analizy w mojej ocenie jest **interfejs CompositeBlock**.
 
-W klasie **Wall** znajduje się pole **blocks**, które przechowuje referencję do listy obiektów implementujących interfejs Block. 
-W naszym przykładzie Listę możemy zainicjalizować obiektami implementującymi interfejs **Block** lub **CompositeBlock**.
+* W klasie **Wall** znajduje się pole **blocks**, które przechowuje referencję do listy obiektów implementujących interfejs Block. 
+* W naszym przykładzie Listę możemy zainicjalizować obiektami implementującymi interfejs **Block** lub **CompositeBlock**.
 
 # III. Co należy rozważyć?
-Należy zwrócić uwagę na interfejs CompositeBlock.
+Należy zwrócić uwagę na interfejs **CompositeBlock**.
 
 Jako, że **CompositeBlock rozszerza Block** implementacja interfejsu CompositeBlock narzuca na **klasę implementująca** interfejs CompositeBlock implementację metod z interfejsu Block oraz CompositeBlock.
 
 W przypadku metody **getBlocks()** sprawa wydaje się oczywista, metoda zwraca po prostu listę obiektów typu Block. Warto jednak zauważyć, że mogą to być również elementy typu **CompositeBlock!**.
 
-Narzuca się jednak myśl co oznacza metoda **getColor()** oraz **getMaterial()** w interfejsie CompositeBlock.
+Narzuca się jednak myśl co oznacza metoda **getColor()** oraz **getMaterial()** w interfejsie **CompositeBlock**.
 
 Oczywiście interfejs nie narzuca klasie go implementującej w jaki sposób metody mają zostać zaimplementowane, jednak (metody interfejsu **CompositeBlock**):
 
@@ -72,9 +72,9 @@ Warto też rozważyć to o czym napisano w opisie metody **getBlocks()**.
 
 **[X:LY]** - odwołanie do danej linijki kodu, gdzie **X** oznacza numer obrazu, a **Y** oznacza numer linijki. np. [1:L15]	
 
-Jako, że nie posiadam szczegółowej specyfikacji dotyczącej implementacji w/w metod, przy ich implementacji postaram stworzyć się jak najbardziej uniwersalne rozwiązanie.
+Jako, że nie posiadam szczegółowej specyfikacji dotyczącej implementacji w/w metod, przy ich implementacji postaram stworzyć się jak najbardziej uniwersalne rozwiązanie. Poniżej przedstawiam moje założenia oraz szczegóły implementacji.
 
-## 1. **Optional<Block> findBlockByColor(String color);**
+## 1. **Optional\<Block\> findBlockByColor(String color);**
 
    1.1 W poszukiwaniach **Block** o określonym kolorze należy uwzględnić:
       
@@ -82,12 +82,12 @@ Jako, że nie posiadam szczegółowej specyfikacji dotyczącej implementacji w/w
    
    1.1.2 Kolor Block’u zwracany przez metodę getColor() - obiekt klasy implementującej interfejs CompositeBlock.
    
-   1.1.3 Kolor Block’u zwracany przez metodę getColor() wywołaną na każdym obiekcie typu Block znajdującym się wewnątrz listy List<Block>  zwracanej przez metodę getBlocks() (obiekt typu CompositeBlock).
+   1.1.3 Kolor Block’u zwracany przez metodę getColor() wywołaną na każdym obiekcie typu Block znajdującym się wewnątrz listy List\<Block\>  zwracanej przez metodę getBlocks() (pochodzącej z obiektu typu CompositeBlock).
 
    **Podsumowanie**
    Zakładamy, że kolor zwracany przez metodę getColor() w obiekcie typu CompositeBlock może się różnić od kolorów opisanych w 1.1.3.
 
-   1.2 Uwzględnić, że List<Block> zwracana przez metodę getBlocks() w obiekcie typu CompositeBlock może zawierać listę obiektów implementujących CompositeBlock.
+   1.2 Uwzględnić, że List\<Block\> zwracana przez metodę getBlocks() w obiekcie typu CompositeBlock może zawierać listę obiektów implementujących CompositeBlock.
 
    1.3 **getColor()** moźe zwrócić null.
 
@@ -97,11 +97,11 @@ Jako, że nie posiadam szczegółowej specyfikacji dotyczącej implementacji w/w
 ### Szczegóły implementacji	
 W związku z tym o czym wspomniano w punkcie 1.2 w celu maksymalnie uniwersalnego rozwiązania zadania narzuca się wykorzystanie **rekurencji** (Niewykluczone jest również zastosowanie innego rozwiązania (bez rekurencji).  W tym celu stworzono **metodę pomocniczą**: 
 
-* private static Stream<Block> **deepFlat**(@NonNull Block block) 
+* private static Stream\<Block\> **deepFlat**(@NonNull Block block) 
 	
-Metodę **deepFlat** wywołujemy (w metodzie **findBlockByColor**) na każdym elemencie strumienia [2:L55] utworzonego z private **List<Block> blocks** (pole klasy Wall). 
+Metodę **deepFlat** wywołujemy (w metodzie **findBlockByColor**) na każdym elemencie strumienia [2:L55] utworzonego z private **List\<Block\> blocks** (pole klasy Wall). 
 
-Metoda **deepFlat** zwraca Strumień: **Stream<Block>** [1:L15], zawierający zarówno element strumienia przekazany jako argument do tej metody [1:L26] (**@NonNull Block block**) jak i wszystkie jego dzieci [1:L27] (**childrens**) będące wynikiem wywołania na nim metody getBlocks() [1:L19], o ile aktualnie rozpatrywany element strumienia jest typu CompositeBlock [1:L17], jeżeli jest tylko typu **Block** [1:L30] (lub **childBlocks == null** [1:L21]) mamy do czynienia z tzw. przypadkiem podstawowym w rekurencji. Dzięki temu w poszukiwaniach Block o zadanym kolorze uwzględnimy wszystkie Block (nawet te pochodzące z metody **getBlocks()** [1:L19]). Pamiętajmy, że wspomniane **childrens**, również mogą posiadać **childrens** stąd zastosowanie rekurencji. 
+Metoda **deepFlat** zwraca Strumień: **Stream\<Block\>** [1:L15], zawierający zarówno element strumienia przekazany jako argument do tej metody [1:L26] (**@NonNull Block block**) jak i wszystkie jego dzieci [1:L27] (**childrens**) będące wynikiem wywołania na nim metody getBlocks() [1:L19], o ile aktualnie rozpatrywany element strumienia jest typu CompositeBlock [1:L17], jeżeli jest tylko typu **Block** [1:L30] (lub **childBlocks == null** [1:L21]) mamy do czynienia z tzw. przypadkiem podstawowym w rekurencji. Dzięki temu w poszukiwaniach Block o zadanym kolorze uwzględnimy wszystkie Block (nawet te pochodzące z metody **getBlocks()** [1:L19]). Pamiętajmy, że wspomniane **childrens**, również mogą posiadać **childrens** stąd zastosowanie rekurencji. 
 
 <p align="center">
   <img src="doc/deep_flat.jpg"> 
@@ -113,27 +113,27 @@ Metoda **findBlockByColor** wykorzystuje metodę **deepFlat** [2:L55] wewnątrz 
   <img src="doc/find_block_by_color.jpg"> 
 </p>
 
-## 2. **public List<Block> findBlocksByMaterial(@NonNull String material)**
+## 2. **public List\<Block\> findBlocksByMaterial(@NonNull String material)**
 
    Metoda działa na bardzo podobnej zasadzie jak ta opisana w punkcie 1. Poniżej opisano więc tylko główne założenia:
 
-   2.1 W poszukiwaniach List<Block> o określonym materiale **należy uwzględnić**:
+   2.1 W poszukiwaniach List\<Block\> o określonym materiale **należy uwzględnić**:
 
    2.1.1 Materiał Block’u zwracany przez metodę getMaterial() - obiekt klasy implementującej interfejs Block.
 
    2.1.2 Materiał Block’u zwracany przez metodę getMaterial() - obiekt klasy implementującej interfejs CompositeBlock.
 
-   2.1.3 Materiał Block’u zwracany przez metodę getMaterial() wywołaną na każdym obiekcie typu Block znajdującym się wewnątrz listy List<Block>  zwracanej przez metodę getBlocks() (obiekt typu CompositeBlock).
+   2.1.3 Materiał Block’u zwracany przez metodę getMaterial() wywołaną na każdym obiekcie typu Block znajdującym się wewnątrz listy List\<Block\>  zwracanej przez metodę getBlocks() (pochodzącej z obiektu typu CompositeBlock).
 
    **Podsumowanie**
    Zakładamy, że materiał zwracany przez metodę getMaterial() w obiekcie typu CompositeBlock może się różnić (z jakiegoś nieznanego mi powodu) od materiałów opisanych w 2.1.3.
 
 
-   2.2 Uwzględnić, że List<Block> zwracana przez metodę getBlocks() w obiekcie typu CompositeBlock może zawierać listę obiektów implementujących CompositeBlock.
+   2.2 Uwzględnić, że List\<Block\> zwracana przez metodę getBlocks() w obiekcie typu CompositeBlock może zawierać listę obiektów implementujących CompositeBlock.
 
-   2.3 getMaterial() moźe zwrócić null.
+   2.3 **getMaterial()** moźe zwrócić null.
 
-   2.4 findBlocksByMaterial(@NonNull String color) - parametr jawny color nie może być null.
+   2.4 **findBlocksByMaterial(@NonNull String color)** - parametr jawny color nie może być null.
 
 ## 3. public int count()
 
