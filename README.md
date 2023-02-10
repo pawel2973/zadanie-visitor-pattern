@@ -1,3 +1,16 @@
+# Zadanie rekrutacyjne dla firmy Horus
+
+I. [Treść zadania](#i-treść-zadania)
+
+II. [Wstęp](#ii-wstęp)
+
+III. [Co należy rozważyć?](#iii-co-należy-rozważyć)
+
+IV. [Implementacja](#iv-implementacja)
+
+V. [Podsumowanie](#v-podsumowanie)
+
+
 # I. Treść zadania
 Poniżej przekazujemy zadanie z prośbą o analizę poniższego kodu i zaimplementowanie metod:
 * findBlockByColor
