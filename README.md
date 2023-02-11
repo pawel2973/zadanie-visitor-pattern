@@ -212,15 +212,15 @@ Metoda działa na bardzo podobnej zasadzie jak ta opisana w punkcie 1.
 ### 1. Implementacja wzorca **Visitor** składa się z:
 * **Interfejsu Visitor** 
    * Posiadającego dwie metody **visit:**
-      * Stream<Block> visit(**Block block**) 
-      * oraz Stream<Block> visit(**CompositeBlock block**);
+      * Stream\<Block\> visit(**Block block**) 
+      * Stream\<Block\> visit(**CompositeBlock block**);
    * Każda z metod przeznaczona jest dla odpowiedniego typu Block.
    * Interfejs ten jest implementowany przez klasę **BlockVisitorImpl**.
 
 
 * **Interfejsu Visitable**
    * Posiadającego jedną metodę **accept:**
-      * Stream<Block> accept(**Visitor visitor**);
+      * Stream\<Block\> accept(**Visitor visitor**);
    * Interfejs ten jest implementowany przez klasę **Block** oraz **CompositeBlock**.
 
 
@@ -235,7 +235,7 @@ składający się z wszystkich elementów węzła (w tym węzła głównego) ora
 
 ### 2. Wybrane fragmenty kodu
 
-* Implementacja metody public **Stream<Block> visit(CompositeBlock block)**
+* Implementacja metody public **Stream\<Block\> visit(CompositeBlock block)**
    * [4:L27] **Istotna linijka** kodu pozwalająca w sposób **polimorficzny** wywołać metodę **visit** dla odpowiedniego typu Block.
       * Zauważmy, że zamiast [4:L27] wywołanie **.flatMap(this::visit)** byłoby błędem, ponieważ wtedy wywoływalibyśmy metodę **visit** dla typu **Block** (Nigdy dla **CompositeBlock**). W tym przypadku nie chcemy dodakowo używać instrukcji if i operatora **instanceof**.
 
