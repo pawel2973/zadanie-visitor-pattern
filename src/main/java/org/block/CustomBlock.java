@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.visitor.Visitor;
-import org.visitor.ItemElement;
+import org.visitor.Visitable;
 import org.wall.Block;
 
 import java.util.stream.Stream;
@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class CustomBlock implements Block, ItemElement {
+public class CustomBlock implements Block, Visitable {
     private final String color;
     private final String material;
 

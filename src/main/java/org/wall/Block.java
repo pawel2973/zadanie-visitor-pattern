@@ -1,8 +1,8 @@
 package org.wall;
 
-import org.visitor.ItemElement;
+import org.visitor.Visitable;
 
-public interface Block extends ItemElement {
+public interface Block extends Visitable {
 
     String getColor();
 

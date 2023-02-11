@@ -4,7 +4,7 @@ import org.wall.Block;
 
 import java.util.stream.Stream;
 
-public interface ItemElement {
+public interface Visitable {
 
     Stream<Block> accept(Visitor visitor);
 }

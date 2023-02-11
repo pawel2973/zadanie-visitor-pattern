@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.visitor.Visitor;
-import org.visitor.ItemElement;
+import org.visitor.Visitable;
 import org.wall.Block;
 import org.wall.CompositeBlock;
 
@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class CustomCompositeBlock implements CompositeBlock, ItemElement {
+public class CustomCompositeBlock implements CompositeBlock, Visitable {
     private String color;
     private String material;
     private List<Block> blocks;

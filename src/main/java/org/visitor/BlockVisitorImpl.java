@@ -24,7 +24,6 @@ public class BlockVisitorImpl implements Visitor {
         return Stream.concat(
                 Stream.of(block),
                 childBlocks.stream()
-                        .peek(x-> System.out.println(this))
                         .flatMap(cBlock -> cBlock.accept(this)));
     }
 }
