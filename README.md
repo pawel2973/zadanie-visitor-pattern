@@ -19,7 +19,7 @@ V. [Założenia](#v-założenia)
 
 VI. [Implementacja rekurencyjna](#vi-implementacja-rekurencyjna)
 
-VII. [Implementacja z wykorzystaniem wzorca Visitor](#vii-implementacja-z-wykorzystaniem-wzorca-visitor)
+VII. [Implementacja z wykorzystaniem wzorca projektowego Visitor](#vii-implementacja-z-wykorzystaniem-wzorca-projektowego-visitor)
 
 VIII. [Podsumowanie](#viii-podsumowanie)
 
