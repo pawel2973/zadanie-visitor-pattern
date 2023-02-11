@@ -177,7 +177,7 @@ Metoda **findBlockByColor** wykorzystuje metodę **deepFlat** [2:L55] wewnątrz 
 
 ### 2. **public List\<Block\> findBlocksByMaterial(@NonNull String material)**
 
-Metoda działa na bardzo podobnej zasadzie jak ta opisana w punkcie 1. Poniżej opisano więc tylko główne założenia:
+Metoda działa na bardzo podobnej zasadzie jak ta opisana w punkcie 1.
 
 ### 3. public int count()
 
