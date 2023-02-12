@@ -221,7 +221,7 @@ Metoda działa na bardzo podobnej zasadzie jak ta opisana w punkcie 1.
 * **Interfejsu Visitable**
    * Posiadającego jedną metodę **accept:**
       * Stream\<Block\> accept(**Visitor visitor**);
-   * Interfejs ten jest implementowany przez klasę **Block** oraz **CompositeBlock**.
+   * Interfejs ten jest rozszerzany przez interfejs **Block**, a w konsekwencji implementowany przez klasę **CustomBlock** oraz **CustomCompositeBlock**.
 
 
 * **Klasy BlockVisitorImpl**
