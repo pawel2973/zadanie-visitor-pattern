@@ -1,11 +1,4 @@
-# UPDATE 11.02.2023
-Po głębszej analizie zadania zdecydowałem się na zmianę implementacji.
-
-W tym celu wykorzystałem wzorzec projektowy **Visitor**. 
-
-Pozostawiłem też poprzednią implementację opartą na rekurencji.
-
-# Zadanie rekrutacyjne dla firmy Horus
+# Zadanie z wykorzystaniem implementacji Visitor Pattern, Composite pattern oraz rekurencji
 
 I. [Treść zadania](#i-treść-zadania)
 
