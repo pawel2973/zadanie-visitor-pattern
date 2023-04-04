@@ -1,4 +1,4 @@
-# Zadanie z wykorzystaniem implementacji Visitor Pattern, Composite pattern oraz rekurencji
+# Zadanie z wykorzystaniem implementacji Visitor Pattern, Composite pattern oraz Rekurencji
 
 I. [Treść zadania](#i-treść-zadania)
 
